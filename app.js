@@ -1,46 +1,101 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const cartButton = document.getElementById('cart');
-    const addToCartButtons = document.querySelectorAll('.button');
-    const cartValue = document.getElementById('cart-value');
-    let cartItems = {};
+var countItem =document.getElementById("itemcount");
+var cardLogo=document.getElementById("card-items");
+let btn = document.querySelectorAll(".add-card");
 
-    // Add click event listeners to all "Add" buttons
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const itemId = button.id;
-            if (cartItems[itemId]) {
-                cartItems[itemId]++;
-            } else {
-                cartItems[itemId] = 1;
-            }
-            updateCartValue();
-        });
-    });
+let totalAmount = 0;
+let count = 0;
 
-    // Update cart value in the UI
-    function updateCartValue() {
-        let totalCount = 0;
-        for (const key in cartItems) {
-            totalCount += cartItems[key];
-        }
-        cartValue.textContent = totalCount;
+var items= [
+    {
+        name: "This was our pact",
+        quantity: 0,
+        cost : 7.69,
+    },
+    {
+        name: "The famous five",
+        quantity: 0,
+        cost : 4.59,
+    },
+    {
+        name: "Matlida",
+        quantity: 0,
+        cost : 6.80,
+    },
+    {
+        name: "Harry Potter",
+        quantity: 0,
+        cost : 10,
+    },
+    {
+        name: "For Young Readers",
+        quantity: 0,
+        cost : 7.29,
+    },
+    {
+        name: "Wimpy Kid - DIY",
+        quantity: 0,
+        cost : 4.99,
+    },
+    {
+        name: "Dart Board",
+        quantity: 0,
+        cost : 17.49,
+    },
+    {
+        name: "Connect Four",
+        quantity: 0,
+        cost : 19.99,
+    },
+    {
+        name: "Jenga",
+        quantity: 0,
+        cost : 20.99,
+    },
+    {
+        name: "Monopoly",
+        quantity: 0,
+        cost: 19.49,
+      },
+      {
+        name: "Bookmarks",
+        quantity: 0,
+        cost: 12.49,
+      },
+      {
+        name: "Birthday Card",
+        quantity: 0,
+        cost: 12.49,
+      },
+      {
+        name: "Stuffed toys",
+        quantity: 0,
+        cost: 15.99,
+      },
+      {
+        name: "Dream catcher drawing",
+        quantity: 0,
+        cost: 18.49,
+      },
+
+];
+
+for (var i = 0; i < btn.length; i++) {
+    btn[i].onclick = function (index) {
+      return function () {
+        totalAmount += items[index].cost;
+        items[index].quantity++;
+        countItem.innerHTML = ++count;
+      };
+    }(i);
+  }
+  
+  cardLogo.onclick = () => {
+    for (let element of items) {
+      if (element.quantity == 0) {
+        continue;
+      } else {
+        console.log("Item name: " + element.name + " - Quantity: " + element.quantity);
+      }
     }
-
-    // Add click event listener to cart button
-    cartButton.addEventListener('click', function() {
-        console.log("Cart Items:");
-        for (const key in cartItems) {
-            console.log(`${getItemName(key)}: ${cartItems[key]}`);
-        }
-        console.log("Total Amount:"); // Add logic to calculate total amount
-    });
-
-    // Function to get item name based on its ID
-    function getItemName(itemId) {
-        const itemElement = document.getElementById(itemId);
-        if (itemElement) {
-            return itemElement.querySelector('h3').textContent;
-        }
-        return "Unknown Item";
-    }
-});
+    console.log("The Total amount is: " + Math.floor(totalAmount) + " dollars and " + Math.floor((totalAmount - Math.floor(totalAmount)) * 100) + " cents");
+};
